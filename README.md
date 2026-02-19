@@ -72,13 +72,13 @@ The algorithm checks for known high-value field combinations and applies the [**
 
 ### 4. Mismatch Penalty
 
-For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L32-L35), a mismatch can be a strong indicator that two records do not match. If such a field is present and does not match, a [penalty is applied](app/api/patient/matches/patientMatchScore/index.ts#L126-L149) to reduce the overall score.
+For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L31-L37), a mismatch can be a strong indicator that two records do not match. If such a field is present and does not match, a [penalty is applied](app/api/patient/matches/patientMatchScore/index.ts#L131-L158) to reduce the overall score.
 
 ### 5. Scanning
 
 The algorithm is applied to every possible pair of patients across the two files, resulting in a list of potential matches with their confidence scores.
 
-[Indexing and efficient data structures](app/api/patient/matches/scanForPatientMatches.ts#L27-L47) are used to minimize the number of comparisons needed, such as [blocking on certain fields](app/api/patient/matches/scanForPatientMatches.ts#L62-L93) (e.g., only comparing patients with the same last name or DOB).
+[Indexing and efficient data structures](app/api/patient/matches/scanForPatientMatches.ts#L27-L47) are used to minimize the number of comparisons needed, such as [blocking on certain fields](app/api/patient/matches/scanForPatientMatches.ts#L59-L92) (e.g., only comparing patients with the same last name or DOB).
 
 ### Output
 
