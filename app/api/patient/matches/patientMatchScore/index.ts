@@ -64,6 +64,7 @@ export function getPatientMatchConfidenceScore(
   recordB: PatientRecord,
 ): [number, Field[]] {
   const matches: Map<Field, number> = new Map();
+  const nonMatches: Map<Field, number> = new Map();
 
   for (const key in fieldWeights) {
     const field = key as Field;
@@ -82,6 +83,8 @@ export function getPatientMatchConfidenceScore(
 
     if (similarity >= similarityThresholds[field]) {
       matches.set(field, similarity);
+    } else {
+      nonMatches.set(field, similarity);
     }
   }
 
@@ -105,7 +108,7 @@ export function getPatientMatchConfidenceScore(
 
   score = Math.min(score, 1.0);
 
-  score += getNonMatchPenalty(recordA, recordB, matches);
+  score += getNonMatchPenalty(nonMatches);
 
   return [Math.max(score, 0), Array.from(matches.keys())];
 }
@@ -130,27 +133,18 @@ function getInteractionBoost(matches: Map<Field, number>): string | undefined {
 }
 
 function getNonMatchPenalty(
-  recordA: PatientRecord,
-  recordB: PatientRecord,
-  matches: Map<Field, number>,
+  nonMatches: Map<Field, number>,
 ): number {
   let penalty = 0;
 
   for (const [key, penaltyValue] of Object.entries(nonMatchPenalties)) {
     const field = key as Field;
 
-    if (matches.has(field)) {
+    const similarity = nonMatches.get(field);
+
+    if (similarity === undefined) {
       continue;
     }
-
-    const normalizedA = normalizeByField(field, recordA[field]);
-    const normalizedB = normalizeByField(field, recordB[field]);
-
-    if (!normalizedA || !normalizedB) {
-      continue;
-    }
-
-    const similarity = getSimilarityByField(field, normalizedA, normalizedB);
 
     // reduces the penalty based on how similar the values are
     const scaledPenalty = penaltyValue * (1 - similarity);

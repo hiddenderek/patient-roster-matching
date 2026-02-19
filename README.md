@@ -68,11 +68,11 @@ The base score is the sum of [weight × similarity](app/api/patient/matches/pati
 
 Certain [**combinations of fields**](app/api/patient/matches/patientMatchScore/index.ts#L18-L30) together are far more identifying than the sum of their parts. For example, matching on first name + last name + date of birth is near-conclusive, but the individual weights alone would only produce a score of ~0.39.
 
-The algorithm checks for known high-value field combinations and applies the [**single largest applicable boost**](app/api/patient/matches/patientMatchScore/index.ts#L114-L130) to the score.
+The algorithm checks for known high-value field combinations and applies the [**single largest applicable boost**](app/api/patient/matches/patientMatchScore/index.ts#L116-L133) to the score.
 
 ### 4. Mismatch Penalty
 
-For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L31-L37), a mismatch can be a strong indicator that two records do not match. If such a field is present and does not match, a [penalty is applied](app/api/patient/matches/patientMatchScore/index.ts#L132-L161) to reduce the overall score.
+For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L31-L37), a mismatch can be a strong indicator that two records do not match. Fields that are present in both records but fall below the similarity threshold are tracked during the main scoring loop and passed to [`getNonMatchPenalty`](app/api/patient/matches/patientMatchScore/index.ts#L135-L155), which scales each penalty by how dissimilar the values are — a near-miss is penalized less than a clear mismatch.
 
 ### 5. Scanning
 
@@ -82,7 +82,7 @@ The algorithm is applied to every possible pair of patients across the two files
 
 ### Output
 
-The [`getPatientMatchConfidenceScore`](app/api/patient/matches/patientMatchScore/index.ts#L61-L112) function returns:
+The [`getPatientMatchConfidenceScore`](app/api/patient/matches/patientMatchScore/index.ts#L62-L114) function returns:
 
 - A **confidence score** between 0 and 1
 - A **list of matched fields** that contributed to the score
