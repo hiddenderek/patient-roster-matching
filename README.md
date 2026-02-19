@@ -62,17 +62,17 @@ A field is only considered a "match" if its similarity meets a [**per-field thre
 
 Each matched field contributes to the score proportional to its [**discriminatory power**](app/api/patient/matches/patientMatchScore/index.ts#L5-L16):
 
-The base score is the sum of [weight × similarity](app/api/patient/matches/patientMatchScore/index.ts#L102) for all matched fields. This is so that fields are penalized for partial matches (e.g., a 0.8 similarity on a field with weight 0.2 contributes only 0.16 to the total score).
+The base score is the sum of [weight × similarity](app/api/patient/matches/patientMatchScore/index.ts#L103) for all matched fields. This is so that fields are penalized for partial matches (e.g., a 0.8 similarity on a field with weight 0.2 contributes only 0.16 to the total score).
 
 ### 3. Interaction Boosts
 
 Certain [**combinations of fields**](app/api/patient/matches/patientMatchScore/index.ts#L18-L30) together are far more identifying than the sum of their parts. For example, matching on first name + last name + date of birth is near-conclusive, but the individual weights alone would only produce a score of ~0.39.
 
-The algorithm checks for known high-value field combinations and applies the [**single largest applicable boost**](app/api/patient/matches/patientMatchScore/index.ts#L112-L129) to the score.
+The algorithm checks for known high-value field combinations and applies the [**single largest applicable boost**](app/api/patient/matches/patientMatchScore/index.ts#L114-L130) to the score.
 
 ### 4. Mismatch Penalty
 
-For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L31-L37), a mismatch can be a strong indicator that two records do not match. If such a field is present and does not match, a [penalty is applied](app/api/patient/matches/patientMatchScore/index.ts#L131-L158) to reduce the overall score.
+For [certain fields](app/api/patient/matches/patientMatchScore/index.ts#L31-L37), a mismatch can be a strong indicator that two records do not match. If such a field is present and does not match, a [penalty is applied](app/api/patient/matches/patientMatchScore/index.ts#L132-L161) to reduce the overall score.
 
 ### 5. Scanning
 
@@ -82,7 +82,7 @@ The algorithm is applied to every possible pair of patients across the two files
 
 ### Output
 
-The [`getPatientMatchConfidenceScore`](app/api/patient/matches/patientMatchScore/index.ts#L50-L110) function returns:
+The [`getPatientMatchConfidenceScore`](app/api/patient/matches/patientMatchScore/index.ts#L61-L112) function returns:
 
 - A **confidence score** between 0 and 1
 - A **list of matched fields** that contributed to the score

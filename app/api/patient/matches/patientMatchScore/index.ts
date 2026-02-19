@@ -47,6 +47,18 @@ const similarityThresholds: Record<Field, number> = {
   sex: 1.0,
 };
 
+function getSimilarityByField(field: Field, valA: string, valB: string): number {
+  switch (field) {
+    case Field.phoneNumber:
+    case Field.address:
+    case Field.firstName:
+    case Field.lastName:
+      return getHybridSimilarity(valA, valB, "subset");
+    default:
+      return getHybridSimilarity(valA, valB);
+  }
+}
+
 export function getPatientMatchConfidenceScore(
   recordA: PatientRecord,
   recordB: PatientRecord,
@@ -66,18 +78,7 @@ export function getPatientMatchConfidenceScore(
       continue;
     }
 
-    let similarity;
-
-    switch (field) {
-      case Field.phoneNumber:
-      case Field.address:
-      case Field.firstName:
-      case Field.lastName:
-        similarity = getHybridSimilarity(normalizedA, normalizedB, "subset");
-        break;
-      default:
-        similarity = getHybridSimilarity(normalizedA, normalizedB);
-    }
+    const similarity = getSimilarityByField(field, normalizedA, normalizedB);
 
     if (similarity >= similarityThresholds[field]) {
       matches.set(field, similarity);
@@ -145,13 +146,15 @@ function getNonMatchPenalty(
     const normalizedA = normalizeByField(field, recordA[field]);
     const normalizedB = normalizeByField(field, recordB[field]);
 
-    if (normalizedA && normalizedB) {
-      const similarity = getHybridSimilarity(normalizedA, normalizedB);
-
-      // reduces the penalty based on how similar the values are
-      const scaledPenalty = penaltyValue * (1 - similarity);
-      penalty += scaledPenalty;
+    if (!normalizedA || !normalizedB) {
+      continue;
     }
+
+    const similarity = getSimilarityByField(field, normalizedA, normalizedB);
+
+    // reduces the penalty based on how similar the values are
+    const scaledPenalty = penaltyValue * (1 - similarity);
+    penalty += scaledPenalty;
   }
 
   return penalty;
