@@ -1,4 +1,4 @@
-import { PatientRosterMatching } from "./components/patient-roster-matching/PatientRosterMatching";
+import { PatientRosterMatching } from "./components/PatientRosterMatching";
 
 import type { ReactElement } from "react";
 

@@ -7,7 +7,7 @@ import { CsvUploadCard } from "./CsvUploadCard";
 import { SuggestedMatches } from "./suggestedMatches/SuggestedMatches";
 import { ThresholdControls } from "./ThresholdControls";
 import { DEFAULT_THRESHOLD } from "@/app/constants";
-import { downloadMatchesCsv, removeKey } from "./utils";
+import { downloadMatchesCsv, pairKey, removeKey } from "./utils";
 import type { PatientRecord } from "./utils";
 import { PatientMatchReport } from "./suggestedMatches/utils";
 
@@ -76,10 +76,6 @@ export function PatientRosterMatching(): ReactElement {
     } finally {
       setIsLoading(false);
     }
-  }
-
-  function pairKey(internalId: string, externalId: string): string {
-    return `${internalId}::${externalId}`;
   }
 
   function toggleReject(internalId: string, externalId: string): void {

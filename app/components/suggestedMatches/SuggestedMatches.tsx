@@ -12,13 +12,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { patientLabel } from "../utils";
+import { pairKey, patientLabel } from "../utils";
 import type { PatientRecord } from "../utils";
 import { MatchDecisionButtons } from "./MatchDecisionButtons";
 import { MatchedFieldsBadges } from "./MatchedFieldsBadges";
 import { PatientRecordHoverCard } from "./PatientRecordHoverCard";
 import { SuggestedMatchesTable } from "./SuggestedMatchesTable";
-import { buildSuggestedMatchesRows, pairKey } from "./utils";
+import { buildSuggestedMatchesRows } from "./utils";
 import { formatPatientName } from "../utils";
 import type { PatientMatchReport, SuggestedMatchesRow } from "./utils";
 

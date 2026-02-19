@@ -1,6 +1,6 @@
 import Papa from "papaparse";
 
-import { normalizeDob } from "../../api/patient/matches/normalizers";
+import { normalizeDob } from "../api/patient/matches/normalizers";
 
 export type PatientRecord = {
   internalPatientId?: string;
@@ -95,4 +95,8 @@ export function removeKey<T>(obj: Record<string, T>, key: string): Record<string
   delete next[key];
 
   return next;
+}
+
+export function pairKey(internalId: string, externalId: string): string {
+  return `${internalId}::${externalId}`;
 }

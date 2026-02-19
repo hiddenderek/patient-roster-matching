@@ -1,6 +1,6 @@
-import type { Field } from "../../../api/patient/matches/schemas";
+import type { Field } from "../../api/patient/matches/schemas";
 
-import type { PatientRecord } from "../utils";
+import { pairKey, type PatientRecord } from "../utils";
 
 export type PatientMatchReport = {
   recordA: PatientRecord;
@@ -26,10 +26,6 @@ type UnmatchedRow = {
 };
 
 export type SuggestedMatchesRow = MatchRow | UnmatchedRow;
-
-export function pairKey(internalId: string, externalId: string): string {
-  return `${internalId}::${externalId}`;
-}
 
 export function buildSuggestedMatchesRows(args: {
   externalRecords: PatientRecord[];

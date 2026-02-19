@@ -2,7 +2,7 @@
 
 import React, { type ReactElement } from "react";
 import * as HoverCard from "@radix-ui/react-hover-card";
-import { normalizeDob } from "../../../api/patient/matches/normalizers";
+import { normalizeDob } from "../../api/patient/matches/normalizers";
 import type { PatientRecord } from "../utils";
 
 export type PatientRecordHoverCardProps = {

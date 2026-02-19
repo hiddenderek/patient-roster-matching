@@ -2,7 +2,7 @@
 
 import type { ReactElement } from "react";
 
-import type { Field } from "../../../api/patient/matches/schemas";
+import type { Field } from "../../api/patient/matches/schemas";
 
 export type MatchedFieldsBadgesProps = {
   matchedFields?: Field[] | null;
