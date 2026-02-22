@@ -23,7 +23,7 @@ const interactionBoosts = {
   "dob:phoneNumber:zipCode": 0.1, // 0.56
 
   "firstName:lastName:phoneNumber": 0.1, // 0.61
-  "firstName:lastName:zipCode": 0.1, // 0.47
+  "firstName:lastName:zipCode": 0.1, // 0.42
 };
 
 const nonMatchPenalties: Partial<Record<Field, number>> = {
