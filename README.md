@@ -66,7 +66,7 @@ The base score is the sum of [weight × similarity](app/api/patient/matches/pati
 
 ### 3. Interaction Boosts
 
-Certain [**combinations of fields**](app/api/patient/matches/patientMatchScore/index.ts#L18-L30) together are far more identifying than the sum of their parts. For example, matching on first name + last name + date of birth is near-conclusive, but the individual weights alone would only produce a score of ~0.39.
+Certain [**combinations of fields**](app/api/patient/matches/patientMatchScore/index.ts#L18-L30) together are far more identifying than the sum of their parts. For example, matching on first name + last name + date of birth is near-conclusive, but the individual weights alone would only produce a score of ~0.41.
 
 The algorithm checks for known high-value field combinations and applies the [**single largest applicable boost**](app/api/patient/matches/patientMatchScore/index.ts#L116-L133) to the score.
 

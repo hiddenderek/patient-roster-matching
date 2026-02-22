@@ -21,6 +21,7 @@ const interactionBoosts = {
   "dob:firstName:lastName": 0.2, // 0.61
   "dob:lastName:zipCode": 0.1, // 0.49
   "dob:phoneNumber:zipCode": 0.1, // 0.56
+  "dob:firstName:sex:zipCode": 0.25, // 0.56
 
   "firstName:lastName:phoneNumber": 0.1, // 0.61
   "firstName:lastName:zipCode": 0.1, // 0.42
@@ -34,9 +35,9 @@ const nonMatchPenalties: Partial<Record<Field, number>> = {
 const similarityThresholds: Record<Field, number> = {
   phoneNumber: 0.86,
   address: 0.8,
-  lastName: 0.5,
+  lastName: 0.7,
   dob: 1.0,
-  firstName: 0.5,
+  firstName: 0.6,
   zipCode: 1.0,
   city: 0.8,
   sex: 1.0,
