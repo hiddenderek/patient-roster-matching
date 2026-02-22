@@ -4,44 +4,39 @@ import { getHybridSimilarity } from "./similarity";
 
 const fieldWeights: Record<Field, number> = {
   phoneNumber: 0.25,
-  address: 0.2,
+  address: 0.22,
 
   lastName: 0.18,
   dob: 0.15,
-  firstName: 0.06,
+  firstName: 0.08,
 
   zipCode: 0.06,
   city: 0.04,
-  sex: 0.01,
+  sex: 0.02,
 };
 
 const interactionBoosts = {
-  "address:dob:firstName": 0.3, // 0.71
-  "address:firstName:lastName": 0.2, // 0.64
+  "address:dob:firstName": 0.15, // 0.60
 
-  "dob:firstName:lastName": 0.4, // 0.79
-  "dob:lastName:zipCode": 0.3, // 0.69
-  "dob:phoneNumber:zipCode": 0.3, // 0.76
-  "dob:sex:zipCode": 0.35, // 0.57
+  "dob:firstName:lastName": 0.2, // 0.61
+  "dob:lastName:zipCode": 0.1, // 0.49
+  "dob:phoneNumber:zipCode": 0.1, // 0.56
 
-  "firstName:lastName:phoneNumber": 0.3, // 0.79
-  "firstName:lastName:zipCode": 0.35, // 0.65
+  "firstName:lastName:phoneNumber": 0.1, // 0.61
+  "firstName:lastName:zipCode": 0.1, // 0.47
 };
 
 const nonMatchPenalties: Partial<Record<Field, number>> = {
-  dob: -0.8,
+  dob: -0.4,
   sex: -0.2,
-  phoneNumber: -0.1,
-  firstName: -0.1,
-  lastName: -0.1,
 };
 
 const similarityThresholds: Record<Field, number> = {
   phoneNumber: 0.86,
   address: 0.8,
-  lastName: 0.8,
+  lastName: 0.5,
   dob: 1.0,
-  firstName: 0.7,
+  firstName: 0.5,
   zipCode: 1.0,
   city: 0.8,
   sex: 1.0,
